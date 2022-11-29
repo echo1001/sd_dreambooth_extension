@@ -79,6 +79,8 @@ def on_ui_tabs():
                                 precision=0)
                             db_train_text_encoder_steps = gr.Number(
                                 label='Stop Training Text Encoder After', value=-1, precision=0)
+                            db_train_text_encoder_only_steps = gr.Number(
+                                label='Train Text Encoder Only For', value=-1, precision=0)
 
                         with gr.Column():
                             gr.HTML(value="Learning Rate")
@@ -129,6 +131,7 @@ def on_ui_tabs():
                                     db_pad_tokens = gr.Checkbox(label="Pad Tokens", value=True)
                                     db_max_token_length = gr.Slider(label="Max Token Length", minimum=75, maximum=300,
                                                                     step=75)
+                                    db_deterministic_latents = gr.Checkbox(label="Use Deterministic Sampling", value=False)
                                 with gr.Column():
                                     gr.HTML("Gradients")
                                     db_gradient_checkpointing = gr.Checkbox(label="Gradient Checkpointing", value=True)
@@ -217,6 +220,7 @@ def on_ui_tabs():
                 db_not_cache_latents,
                 db_num_train_epochs,
                 db_pad_tokens,
+                db_deterministic_latents,
                 db_pretrained_vae_name_or_path,
                 db_prior_loss_weight,
                 db_resolution,
@@ -230,6 +234,7 @@ def on_ui_tabs():
                 db_train_batch_size,
                 db_train_text_encoder,
                 db_train_text_encoder_steps,
+                db_train_text_encoder_only_steps,
                 db_use_8bit_adam,
                 db_use_concepts,
                 db_use_cpu,
@@ -319,6 +324,7 @@ def on_ui_tabs():
                 db_not_cache_latents,
                 db_num_train_epochs,
                 db_pad_tokens,
+                db_deterministic_latents,
                 db_pretrained_vae_name_or_path,
                 db_prior_loss_weight,
                 db_resolution,
@@ -332,6 +338,7 @@ def on_ui_tabs():
                 db_train_batch_size,
                 db_train_text_encoder,
                 db_train_text_encoder_steps,
+                db_train_text_encoder_only_steps,
                 db_use_8bit_adam,
                 db_use_concepts,
                 db_use_cpu,

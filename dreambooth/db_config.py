@@ -31,6 +31,7 @@ class DreamboothConfig:
                  not_cache_latents=False,
                  num_train_epochs: int = 1,
                  pad_tokens: bool = True,
+                 deterministic_latents: bool = False,
                  pretrained_vae_name_or_path: str = "",
                  prior_loss_weight: float = 1.0,
                  resolution: int = 512,
@@ -44,6 +45,7 @@ class DreamboothConfig:
                  train_batch_size: int = 1,
                  train_text_encoder: bool = True,
                  train_text_encoder_steps=-1,
+                 train_text_encoder_only_steps=-1,
                  use_8bit_adam: bool = True,
                  use_concepts: bool = False,
                  use_cpu: bool = False,
@@ -140,6 +142,7 @@ class DreamboothConfig:
         self.not_cache_latents = not_cache_latents
         self.num_train_epochs = num_train_epochs
         self.pad_tokens = pad_tokens
+        self.deterministic_latents = deterministic_latents
         self.pretrained_model_name_or_path = working_dir
         self.pretrained_vae_name_or_path = pretrained_vae_name_or_path
         self.prior_loss_weight = prior_loss_weight
@@ -154,6 +157,7 @@ class DreamboothConfig:
         self.train_batch_size = train_batch_size
         self.train_text_encoder = train_text_encoder
         self.train_text_encoder_steps = train_text_encoder_steps
+        self.train_text_encoder_only_steps = train_text_encoder_only_steps
         self.use_8bit_adam = use_8bit_adam
         self.use_concepts = use_concepts
         self.use_cpu = use_cpu

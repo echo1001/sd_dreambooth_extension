@@ -611,6 +611,8 @@ def main(args: DreamboothConfig, memory_record):
 
     if not args.train_text_encoder:
         text_encoder.requires_grad_(False)
+    else:
+        text_encoder.requires_grad_(True)
 
     if args.gradient_checkpointing:
         unet.enable_gradient_checkpointing()
@@ -976,6 +978,13 @@ def main(args: DreamboothConfig, memory_record):
             unet.train()
             if args.train_text_encoder and text_encoder is not None:
                 text_encoder.train()
+
+                if args.train_text_encoder_only_steps == 0 or \
+                    (args.train_text_encoder_only_steps > 0 and args.train_text_encoder_only_steps > args.revision):
+                    unet.requires_grad_(False)
+                else:
+                    unet.requires_grad_(True)
+            #print("here")
             for step, batch in enumerate(train_dataloader):
                 with accelerator.accumulate(unet):
                     concept_index = train_dataset.concepts_index
@@ -986,6 +995,10 @@ def main(args: DreamboothConfig, memory_record):
                             latent_dist = batch[0][0]
                         else:
                             latent_dist = vae.encode(batch["pixel_values"].to(dtype=weight_dtype)).latent_dist
+                            
+                        if args.deterministic_latents:
+                            latent_dist.std = 0
+                            
                         latents = latent_dist.sample() * 0.18215
                         b_size = latents.shape[0]
 
